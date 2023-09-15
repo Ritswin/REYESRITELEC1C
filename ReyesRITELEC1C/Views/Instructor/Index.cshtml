@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Instructor>;
+
+<div>Instructor List</div>
+
+
+<table class="table table-dark">
+
+    <tr>
+        <th colspan="6">Instructor</th>
+    </tr>
+
+    <tr>
+        <td>Name</td>
+        <td>Status</td> @*Permanent or Provisionary*@
+        <td>Rank</td>
+        <td>Hiring Date</td>
+        <td>Details</td>
+
+
+    </tr>
+    @foreach (var inst in Model)
+    {
+        <tr>
+            <td>@inst.FirstName @inst.LastName</td>
+            <td>@*@{
+                    if (@inst.isTenured == true){
+                        return "Permanent";
+                    }else
+                    {
+                        string output = "Provisionary";
+                    }
+                }*@ @inst.isTenured
+            </td>
+            <td>@inst.Rank</td>
+            <td>@inst.HiringDate</td>
+            <td><a asp-action="ShowDetail" asp-route-id="@inst.Id">Show Details</a></td>
+
+        </tr>
+    }
+</table>
+
+

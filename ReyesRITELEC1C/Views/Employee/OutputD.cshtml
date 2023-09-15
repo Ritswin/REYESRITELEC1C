@@ -1,0 +1,104 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <style>
+        table, th, td {
+            border:1px solid black;
+        }
+    </style>
+
+    <h1>Output D</h1>
+    <br />
+    @foreach (var empl in Model)
+    {
+        var Name = "Kyle Reyes";
+        var PrelimGrade = 92;
+        var FinalGrade = 90;
+        var SemGrade = (PrelimGrade + FinalGrade) / 2;
+        double TransGrade = 0;
+
+        if (SemGrade <= 100 && SemGrade >= 96)
+        {
+            TransGrade = 1;
+        }
+        else if (SemGrade <= 95 && SemGrade >= 94)
+        {
+            TransGrade = 1.25;
+        }
+        else if (SemGrade <= 93 && SemGrade >= 92)
+        {
+            TransGrade = 1.50;
+        }
+        else if (SemGrade <= 91 && SemGrade >= 89)
+        {
+            TransGrade = 1.75;
+        }
+        else if (SemGrade <= 88 && SemGrade >= 87)
+        {
+            TransGrade = 2;
+        }
+        else if (SemGrade <= 86 && SemGrade >= 84)
+        {
+            TransGrade = 2.25;
+        }
+        else if (SemGrade <= 83 && SemGrade >= 82)
+        {
+            TransGrade = 2.50;
+        }
+        else if (SemGrade <= 81 && SemGrade >= 79)
+        {
+            TransGrade = 2.75;
+        }
+        else if (SemGrade <= 78 && SemGrade >= 75)
+        {
+            TransGrade = 3;
+        }
+        else if (SemGrade < 75)
+        {
+            TransGrade = 5;
+        }
+        else
+        {
+            TransGrade = 0;
+        }
+
+        <table style ="width:100%">
+        <tr>
+            <td>Name: </td>
+            <td>@Name</td>
+        </tr>
+         <tr>
+            <td>Prelim: </td>
+            <td>@PrelimGrade </td>
+        </tr>
+        <tr>
+            <td>Final: </td>
+            <td>@FinalGrade</td>
+        </tr>
+        <tr>
+            <td>Semestral Grade: </td>
+            <td>@SemGrade</td>
+        </tr>
+        <tr>
+            <td>Transmuted Grade: </td>
+            <td>@TransGrade</td>
+        </tr>
+
+
+        </table>
+        <br />
+        <tr>
+            <td><a asp-action="Index" asp-route-id="">Output A</a></td>
+            <td><a asp-action="OutputB" asp-route-id="">Output B</a></td>
+            <td><a asp-action="OutputC" asp-route-id="">Output C</a></td>
+
+        </tr>
+
+    }
+
+</div>

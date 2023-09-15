@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    DateTime dtNow = DateTime.Now;
+    var firstDay = new DateTime(1, 1, 1);
+    
+
+}
+
+<div>
+    <h1>Output A</h1>
+    <br />
+        @foreach (var empl in Model)
+        {
+        TimeSpan difference = dtNow.Subtract(@empl.Birthday);
+        int Age = (firstDay + difference).Year - 1;
+
+        <p>I'm @empl.FirstName @empl.LastName and i'm @Age years old!</p>
+
+        <br />
+
+        <br />
+
+        <tr>
+            <td><a asp-action="OutputB" asp-route-id="">Output B</a></td>
+            <td><a asp-action="OutputC" asp-route-id="">Output C</a></td>
+            <td><a asp-action="OutputD" asp-route-id="">Output D</a></td>
+
+        </tr>
+
+        }
+
+</div>
+

@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+    ViewData["Title"] = "Home Page";
+    
+}
+
+
+<div>
+    <h1>Output B</h1>
+    <br />
+    @foreach (var empl in Model)
+    {
+
+        string[] separatingStrings = { "@" };
+        string[] words = empl.Email.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+
+        <p>Email: @empl.Email</p>
+        <p>Domain: @words[1]</p>
+        <p>Username: @words[0]</p>
+
+        <tr>
+            <td><a asp-action="Index" asp-route-id="">Output A</a></td>
+            <td><a asp-action="OutputC" asp-route-id="">Output C</a></td>
+            <td><a asp-action="OutputD" asp-route-id="">Output D</a></td>
+
+        </tr>
+
+    }
+
+</div>
