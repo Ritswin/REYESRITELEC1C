@@ -1,47 +1,113 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using ReyesRITELEC1C.Data;
 using ReyesRITELEC1C.Models;
+//using ReyesRITELEC1C.Services;
 
 
 namespace ReyesRITELEC1C.Controllers
 {
     public class InstructorController : Controller
     {
-        List<Instructor> InsList = new List<Instructor>
-            {
-                new Instructor()
-                {
-                    Id= 1,FirstName = "Gabriel",LastName = "Montano", isTenured = true, Rank = Rank.instructor, HiringDate = DateTime.Parse("2022-08-26")
-                },
-                new Instructor()
-                {
-                    Id= 2,FirstName = "Zyx",LastName = "Montano", isTenured = false, Rank = Rank.Professor, HiringDate = DateTime.Parse("2022-08-07")
-                },
-                new Instructor()
-                {
-                    Id= 3,FirstName = "Aerdriel",LastName = "Montano", isTenured = true, Rank = Rank.AssociateProfessor, HiringDate = DateTime.Parse("2020-01-25")
-                },
-                new Instructor()
-                {
-                    Id= 4,FirstName = "Bongbong",LastName = "Montano", isTenured = false, Rank = Rank.AssistantProfessor, HiringDate = DateTime.Parse("2020-01-26")
-                }
-            };
+        private readonly AppDbContext _dbContext;
+
+        public InstructorController(AppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public IActionResult Index()
         {
-            return View(InsList);
+            return View(_dbContext.Instructors);
+        }
+
+        [HttpGet]
+        public IActionResult AddInstructor()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddInstructor(Instructor newInstructor)
+        {
+            _dbContext.Instructors.Add(newInstructor);
+            _dbContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult EditInstructor(int Id)
+        {
+            var instructor = _dbContext.Instructors.FirstOrDefault(ins => ins.Id == Id);
+
+            if (instructor != null)
+            {
+                return View(instructor);
+            }
+
+            return NotFound();
+        }
+
+        public IActionResult EditInstructor(Instructor instructor)
+        {
+            var ins = _dbContext.Instructors.FirstOrDefault(ins => ins.Id == instructor.Id);
+
+            if (ins != null)
+            {
+                ins.FirstName = instructor.FirstName;
+                ins.LastName = instructor.LastName;
+                ins.isTenured = instructor.isTenured;
+                ins.Rank = instructor.Rank;
+                ins.HiringDate = instructor.HiringDate;
+                _dbContext.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet]
+        public IActionResult DeleteInstructor(int Id)
+        {
+            var instructor = _dbContext.Instructors.FirstOrDefault(ins => ins.Id == Id);
+
+            if (instructor != null)
+            {
+                return View(instructor);
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteInstructor(Instructor instructor)
+        {
+            var ins = _dbContext.Instructors.FirstOrDefault(ins => ins.Id == instructor.Id);
+
+            if (ins != null)
+            {
+                _dbContext.Instructors.Remove(ins);
+                _dbContext.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return NotFound();
         }
 
         public IActionResult ShowDetail(int id)
         {
-            //Search for the instructor whose id matches the given id
-            Instructor? inst = InsList.FirstOrDefault(truc => truc.Id == id);
+            Instructor? instructor = _dbContext.Instructors.FirstOrDefault(ins => ins.Id == id);
 
-            if (inst != null)//was an instructor found?
-                return View(inst);
+            if (instructor != null)
+            {
+                return View(instructor);
+            }
 
-
-            return NotFound(); 
-        
+            return NotFound();
         }
-
     }
 }

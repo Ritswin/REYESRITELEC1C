@@ -1,24 +1,21 @@
+﻿@{
 
-@model 
+    var tenured = Model.isTenured ? "Permanent" : "Probationary";
+}
 
-<h1>Instructor Details</h1>
+@model Instructor;
 
 <table class="table table-dark">
+    <tr>
+        <th colspan="10">Instructor</th>
+    </tr>
     <tr>
         <th>Id</th>
         <td>@Model.Id</td>
     </tr>
     <tr>
-        <th>Last Name</th>
-        <td>@Model.LastName</td>
-    </tr>
-    <tr>
-        <th>First Name</th>
-        <td>@Model.FirstName</td>
-    </tr>
-    <tr>
-        <th>Status</th>
-        <td>@Model.isTenured</td>
+        <th>Name</th>
+        <td>@Model.FirstName @Model.LastName</td>
     </tr>
     <tr>
         <th>Rank</th>
@@ -27,5 +24,9 @@
     <tr>
         <th>Hiring Date</th>
         <td>@Model.HiringDate</td>
+    </tr>
+    <tr>
+        <th>Is Tenured?</th>
+        <td>@tenured</td>
     </tr>
 </table>
